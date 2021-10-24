@@ -24,10 +24,10 @@ An AngularJS focused take home test for Front-end Developers.
 [x] Show the 7 Day forecast as a multi-line chart (use any charting library you would like but it should be incorporated
 as an Angular Directive)
 
-[x]Y axis should show the High and Low temperature as separate lines
-[x] X axis should show 7 days (starting with the "current" day)
-[x] The chart should have a tool tip that when activated shows:
-[x]Day of the week
-[x] High temperature
-[x]Low temperature
-[x] Weather description (ie. Breezy)
+- [x]Y axis should show the High and Low temperature as separate lines
+  [x] X axis should show 7 days (starting with the "current" day)
+  [x] The chart should have a tool tip that when activated shows:
+  [x]Day of the week
+  [x] High temperature
+  [x]Low temperature
+  [x] Weather description (ie. Breezy)
