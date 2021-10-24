@@ -21,7 +21,22 @@
     <header ng-include="'header.html'"></header>
     <div class="content container">
       <div class="weather-container" ng-controller="WeatherController">
-        <h3>Toggle options for more info</h3>
+        <form ng-submit="getWeather()">
+          <p>
+            <label for="pincode">Enter a zipcode from the United States </label>
+          </p>
+          <input
+            type="text"
+            name="pincode"
+            id="pincode"
+            placeholder="Enter Postal code"
+            ng-model="pincode"
+            required
+          />
+          <input type="submit" value="Get Weather" />
+          <p class="error-msg" ng-show="getweathererror">{{getweathererror}}</p>
+        </form>
+        <h3>Toggle for more info</h3>
         <div class="toggles">
           <article class="sun-toggle">
             <input type="checkbox" name="sun" id="sun" ng-model="sun" />
@@ -61,22 +76,14 @@
         <div class="current-weather-card">
           <div class="default-values">
             <div class="location">
-              <span class="city">{{currentWeather.location.city}} </span>
-              <p class="country">
-                ({{currentWeather.location.country}},
-                {{currentWeather.location.region}})
-              </p>
+              <span class="city">{{location.name}} </span>
+              <p class="country">({{location.country}})</p>
             </div>
-            <p class="date">
-              {{currentWeather.item.forecast[0].day}},
-              {{currentWeather.item.forecast[0].date}}
-            </p>
+            <p class="date">{{date}}</p>
             <div class="temperature">
-              <p class="temp-value">
-                {{currentWeather.item.condition.temp}}&deg;
-              </p>
+              <p class="temp-value">{{temp}}&deg; C</p>
             </div>
-            <p class="description">{{currentWeather.item.condition.text}}</p>
+            <p class="description">{{condition}}</p>
             <p class="temp-range">
               <span class="min">
                 <svg
@@ -92,7 +99,7 @@
                     d="M16 17l-4 4m0 0l-4-4m4 4V3"
                   />
                 </svg>
-                {{currentWeather.item.forecast[0].low}}&deg;
+                {{tempMin}}&deg;
               </span>
               -
               <span class="max">
@@ -109,35 +116,27 @@
                     d="M8 7l4-4m0 0l4 4m-4-4v18"
                   />
                 </svg>
-                {{currentWeather.item.forecast[0].high}}&deg;
+                {{tempMax}}&deg;
               </span>
             </p>
           </div>
           <div class="toggled-values">
             <div class="option-container sun" ng-show="sun">
               <img class="icon" src="content/images/sunrise.png" alt="" />
-              <p class="text">
-                {{currentWeather.astronomy.sunrise}} -
-                {{currentWeather.astronomy.sunset}}
-              </p>
+              <p class="text">{{sunrise}} - {{sunset}}</p>
             </div>
             <div class="option-container wind" ng-show="wind">
               <img class="icon" src="content/images/wind.png" alt="" />
-              <p class="text">
-                {{currentWeather.wind.speed}} {{currentWeather.units.speed}}
-              </p>
+              <p class="text">{{windspeedVal}}</p>
             </div>
             <div class="option-container pressure" ng-show="pressure">
               <img class="icon" src="content/images/pressure.png" alt="" />
-              <p class="text">
-                {{currentWeather.atmosphere.pressure}}
-                {{currentWeather.units.pressure}}
-              </p>
+              <p class="text">{{pressureVal}}</p>
             </div>
 
             <div class="option-container humidity" ng-show="humidity">
               <img class="icon" src="content/images/humidity.png" alt="" />
-              <p class="text">{{currentWeather.atmosphere.humidity}} %</p>
+              <p class="text">{{humidityVal}}</p>
             </div>
           </div>
         </div>
@@ -151,6 +150,18 @@
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"
       integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"
+      integrity="sha512-rjmacQUGnwQ4OAAt3MoAmWDQIuswESNZwYcKC8nmdCIxAVkRC/Lk2ta2CWGgCZyS+FfBWPgaO01LvgwU/BX50Q=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
