@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+    />
+    <link rel="stylesheet" href="content/css/style.css" />
+    <title>Weather</title>
+  </head>
+  <body ng-app="app">
+    <header ng-include="'header.html'"></header>
+    <div class="content container">
+      <div class="weather-container" ng-controller="WeatherController">
+        <h3>Toggle options for more info</h3>
+        <div class="toggles">
+          <article class="sun-toggle">
+            <input type="checkbox" name="sun" id="sun" ng-model="sun" />
+            <div>
+              <span> Sunrise / Sunset </span>
+            </div>
+          </article>
+          <article class="wind-toggle">
+            <input type="checkbox" name="wind" id="wind" ng-model="wind" />
+            <div>
+              <span>Wind Speed </span>
+            </div>
+          </article>
+          <article class="humidity-toggle">
+            <input
+              type="checkbox"
+              name="humidity"
+              id="humidity"
+              ng-model="humidity"
+            />
+            <div>
+              <span>Humidity </span>
+            </div>
+          </article>
+          <article class="pressure-toggle">
+            <input
+              type="checkbox"
+              name="pressure"
+              id="pressure"
+              ng-model="pressure"
+            />
+            <div>
+              <span> Pressure </span>
+            </div>
+          </article>
+        </div>
+        <div class="current-weather-card">
+          <div class="default-values">
+            <div class="location">
+              <span class="city">{{currentWeather.location.city}} </span>
+              <p class="country">
+                ({{currentWeather.location.country}},
+                {{currentWeather.location.region}})
+              </p>
+            </div>
+            <p class="date">
+              {{currentWeather.item.forecast[0].day}},
+              {{currentWeather.item.forecast[0].date}}
+            </p>
+            <div class="temperature">
+              <p class="temp-value">
+                {{currentWeather.item.condition.temp}}&deg;
+              </p>
+            </div>
+            <p class="description">{{currentWeather.item.condition.text}}</p>
+            <p class="temp-range">
+              <span class="min">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 17l-4 4m0 0l-4-4m4 4V3"
+                  />
+                </svg>
+                {{currentWeather.item.forecast[0].low}}&deg;
+              </span>
+              -
+              <span class="max">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7l4-4m0 0l4 4m-4-4v18"
+                  />
+                </svg>
+                {{currentWeather.item.forecast[0].high}}&deg;
+              </span>
+            </p>
+          </div>
+          <div class="toggled-values">
+            <div class="option-container sun" ng-show="sun">
+              <img class="icon" src="content/images/sunrise.png" alt="" />
+              <p class="text">
+                {{currentWeather.astronomy.sunrise}} -
+                {{currentWeather.astronomy.sunset}}
+              </p>
+            </div>
+            <div class="option-container wind" ng-show="wind">
+              <img class="icon" src="content/images/wind.png" alt="" />
+              <p class="text">
+                {{currentWeather.wind.speed}} {{currentWeather.units.speed}}
+              </p>
+            </div>
+            <div class="option-container pressure" ng-show="pressure">
+              <img class="icon" src="content/images/pressure.png" alt="" />
+              <p class="text">
+                {{currentWeather.atmosphere.pressure}}
+                {{currentWeather.units.pressure}}
+              </p>
+            </div>
+
+            <div class="option-container humidity" ng-show="humidity">
+              <img class="icon" src="content/images/humidity.png" alt="" />
+              <p class="text">{{currentWeather.atmosphere.humidity}} %</p>
+            </div>
+          </div>
+        </div>
+        <div class="forecast">
+          <h3>Forecast</h3>
+          <forecast-graph forecast="forecast"></forecast-graph>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"
+      integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="app/lib/angular.min.js"></script>
+    <script src="/app/app.js"></script>
+  </body>
+</html>
