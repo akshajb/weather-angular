@@ -15,7 +15,7 @@ app.controller("WeatherController", [
           $scope.getweathererror = null;
           $scope.location = data;
           return $http.get(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&units=metric&appid=${appid}`
+            `http://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&units=metric&appid=${appid}`
           );
         })
         .then(({ data }) => {
@@ -28,7 +28,7 @@ app.controller("WeatherController", [
           $scope.windspeedVal = `${data.wind.speed} m/s`;
 
           return $http.get(
-            `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&units=metric&exclude=minutely,hourly,alerts&appid=${appid}`
+            `http://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&units=metric&exclude=minutely,hourly,alerts&appid=${appid}`
           );
         })
         .then(({ data }) => {
@@ -72,7 +72,9 @@ app.controller("WeatherController", [
           };
         })
         .catch((error) => {
-          $scope.getweathererror = error.data.message;
+          if (error.data) {
+            $scope.getweathererror = error.data.message;
+          }
         });
     };
 
